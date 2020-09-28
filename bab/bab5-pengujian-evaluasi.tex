@@ -10,9 +10,9 @@
 \section{Lingkungan Pengujian}
 \vspace{1ex}
 
-Kami menggunakan VPS (\emph{Virtual Private Server}) sebagai media yang digunakan untuk menjalankan sistem yang kami buat secara online.
+Pengujian yang kami lakukan menggunakan VPS (\emph{Virtual Private Server}) sebagai media yang digunakan untuk menjalankan sistem yang kami buat secara online.
 Pada VPS tersebut, kami mempersiapkan beberapa hal yang diperlukan agar sistem bisa berjalan dengan semestinya.
-Persiapan yang dijelaskan tersebut terdiri dari instalasi library dan framework yang dibutuhkan, konfigurasi DNS (\emph{Domain Name System}), konfigurasi service, dan lain sebagainya.
+Persiapan yang dijelaskan tersebut terdiri dari instalasi library dan framework yang dibutuhkan, instalasi dan konfigurasi database, konfigurasi DNS (\emph{Domain Name System}), konfigurasi service, dan lain sebagainya.
 \vspace{0.5ex}
 
 Setelah server sudah siap untuk digunakan, kami kemudian mempersiapkan dua jenis perangkat untuk menguji fungsionalitas dari sistem yang telah kami buat.
@@ -22,7 +22,7 @@ Pengujian tersebut akan dilakukan menggunakan sebuah perangkat desktop yang meng
 \section{Skenario Pengujian}
 \vspace{1ex}
 
-Pengujian yang kami lakukan akan mencakup berbagai macam aspek yang dimiliki oleh sistem yang telah kami buat.
+Pengujian yang kami lakukan akan mencakup keseluruhan aspek yang dimiliki oleh sistem yang telah kami buat.
 Detail dari aspek-aspek tersebut adalah sebagai berikut:
 \vspace{0.5ex}
 
@@ -43,8 +43,12 @@ Detail dari aspek-aspek tersebut adalah sebagai berikut:
 \end{enumerate}
 \vspace{0.5ex}
 
-\section{Evaluasi Pengujian}
+\section{Tahapan Pengujian dan Evaluasi}
 \vspace{1ex}
+
+Pada bagian ini, kami akan membahas tahapan-tahapan pengujian yang kami lakukan beserta evaluasinya dengan memperhatikan aspek-aspek yang telah dijelaskan sebelumnya.
+Untuk mempersingkat cakupan bahasan pada buku ini, pengujian tidak akan dilakukan pada keseluruhan fitur yang ada pada sistem yang kami buat, namun cukup beberapa fitur yang secara umum sudah mewakili aspek-aspek tersebut.
+\vspace{0.5ex}
 
 \subsection{Menguji Sistem Login dan Pendaftaran Akun Baru}
 \vspace{1ex}
@@ -86,7 +90,54 @@ Dengan ini, nantinya pengguna yang membutuhkan akses terhadap data administrasi 
 \subsection{Menguji Penambahan, Pengubahan, dan Penghapusan Data}
 \vspace{1ex}
 
-\lipsum[4]
+Pada pengujian ini, kami mencoba melakukan penambahan data palet sesuai dengan tabel \ref{tb:dataPalet}.
+Penambahan data palet ini dilakukan pada halaman detail dokumen dengan mengklik tombol tambah data palet.
+Setelah tombol diklik, maka akan muncul jendela baru seperti yang terlihat pada gambar \ref{fig:tambahPalet}.
+\vspace{0.5ex}
+
+\begin{longtable}{|l|l|l|l|l|}
+	\caption{Data Palet}
+	\label{tb:dataPalet}\\
+  \hline
+  \rowcolor[HTML]{C0C0C0}
+  \textbf{Mulai} & \textbf{Selesai} & \textbf{Palet} & \textbf{Basket} & \textbf{Jumlah Layer} \\ \hline
+	13:03 & 13:34 & 1 & 1, 2, 3 & 18 \\ \hline
+	13:34 & 13:49 & 2 & 3, 4, 5 & 18 \\ \hline
+	13:49 & 14:05 & 3 & 5, 6, 7 & 18 \\ \hline
+	14:05 & 14:26 & 4 & 7, 8, 9 & 18 \\ \hline
+	14:26 & 14:35 & 5 & 9, 10, 11, 12 & 18 \\ \hline
+	14:35 & 14:50 & 6 & 12, 13, 14 & 18 \\ \hline
+\end{longtable}
+
+\begin{figure} [ht!] \centering
+  \includegraphics[width=0.95\textwidth]{gambar/tambah-palet.png}
+  \caption{Tampilan Jendela Tambah Data Palet}
+	\label{fig:tambahPalet}
+\end{figure}
+
+Pengujian kemudian dilanjutkan dengan mengubah jumlah layer pada palet nomor 5 menjadi sebanyak 15.
+Pengubahan data palet ini dilakukan pada halaman detail palet seperti yang terlihat pada gambar \ref{fig:ubahPalet}.
+\vspace{0.5ex}
+
+\begin{figure} [ht!] \centering
+  \includegraphics[width=0.95\textwidth]{gambar/ubah-palet.png}
+  \caption{Tampilan Halaman Detail Palet}
+	\label{fig:ubahPalet}
+\end{figure}
+
+Terakhir, pengujian kemudian dilanjutkan dengan menghapus data pada palet nomor 6.
+Penghapusan data palet ini juga dilakukan pada halaman detail palet seperti pada percobaan sebelumnya dengan menekan tombol hapus data palet.
+Hasil akhir dari percobaan ini adalah kumpulan data palet seperti yang terlihat pada gambar \ref{fig:daftarPalet}.
+\vspace{0.5ex}
+
+\begin{figure} [ht!] \centering
+  \includegraphics[width=0.95\textwidth]{gambar/daftar-palet.png}
+  \caption{Tampilan Daftar Palet}
+	\label{fig:daftarPalet}
+\end{figure}
+
+Dari pengujian yang telah dilakukan tersebut, dapat disimpulkan bahwa sistem yang telah kami buat bisa digunakan untuk melakukan penambahan, pengubahan, serta penghapusan data sesuai dengan struktur data yang telah ditentukan oleh sistem.
+Dengan ini, nantinya sistem yang kami buat bisa digunakan untuk menampung serta menampilkan data administrasi loading barang, menggantikan metode sebelumnya yang masih berbasis kertas.
 \vspace{0.5ex}
 
 \subsection{Menguji PWA Pada Perangkat Mobile}
