@@ -49,7 +49,38 @@ Detail dari aspek-aspek tersebut adalah sebagai berikut:
 \subsection{Menguji Sistem Login dan Pendaftaran Akun Baru}
 \vspace{1ex}
 
-\lipsum[4]
+Pada pengujian ini, kami mencoba membuat akun baru pada sistem sesuai dengan yang ada pada gambar \ref{fig:mendaftarAkun}.
+Akun baru yang dibuat ini nantinya akan digunakan oleh pihak karyawan yang ditugaskan untuk melakukan pencatatan administrasi loading barang agar bisa mengakses fungsionalitas pada sistem yang dibuat.
+\vspace{0.5ex}
+
+\begin{figure} [ht!] \centering
+  \includegraphics[width=0.95\textwidth]{gambar/mendaftar-akun.png}
+  \caption{Tampilan Halaman Pendaftaran Akun Baru}
+	\label{fig:mendaftarAkun}
+\end{figure}
+
+Pada sistem yang kami buat, sebelum bisa login, akun baru harus diverifikasi terlebih dahulu oleh admin untuk menghindari akses dari akun yang tidak diinginkan.
+Verifikasi sendiri bisa dilakukan pada halaman daftar pengguna menggunakan akun admin seperti yang terlihat pada gambar \ref{fig:daftarPengguna}.
+\vspace{0.5ex}
+
+\begin{figure} [ht!] \centering
+  \includegraphics[width=0.95\textwidth]{gambar/daftar-pengguna.png}
+  \caption{Tampilan Halaman Daftar Pengguna}
+	\label{fig:daftarPengguna}
+\end{figure}
+
+Pengujian kemudian dilanjutkan dengan melakukan login menggunakan akun yang sudah diverifikasi sebelumnya seperti yang terlihat pada gambar \ref{fig:loginAkun}.
+Setelah login berhasil, tampilan akan berpindah ke halaman utama yang berisi data dari keseluruhan administrasi loading barang.
+\vspace{0.5ex}
+
+\begin{figure} [ht!] \centering
+  \includegraphics[width=0.95\textwidth]{gambar/login-akun.png}
+  \caption{Tampilan Halaman Login Akun}
+	\label{fig:loginAkun}
+\end{figure}
+
+Dari pengujian yang telah dilakukan tersebut dapat disimpulkan bahwa sistem yang telah kami buat bisa digunakan untuk melakukan login serta registrasi untuk pembuatan akun baru.
+Dengan ini, nantinya pengguna yang membutuhkan akses terhadap data administrasi loading barang bisa membuat akun baru yang kemudian dapat diverifikasi oleh admin agar bisa mengakses data tersebut.
 \vspace{0.5ex}
 
 \subsection{Menguji Penambahan, Pengubahan, dan Penghapusan Data}
