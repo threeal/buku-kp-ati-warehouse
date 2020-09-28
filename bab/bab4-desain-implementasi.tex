@@ -51,7 +51,172 @@ Untuk Detail lebih lengkap dari kode program sistem yang kami buat bisa dilihat 
 \subsection{Implementasi \emph{Database}}
 \vspace{1ex}
 
-\lipsum[3]
+Database yang digunakan pada sistem yang kami buat merupakan database yang berbasis \emph{document-oriented}, sehingga data yang ada akan tersimpan dalam bentuk dokumen (seperti class pada bahasa pemrograman), dan bukan berbentuk tabel seperti database pada umumnya.
+Dalam implementasinya, kami menggunakan \emph{MongoDB} sebagai sistem dari database itu sendiri dan library tambahan \emph{Mongoose} yang digunakan untuk mengkases \emph{MongoDB} pada program yang berbasis \emph{Node.js}.
+
+Pada \emph{MongoDB}, setiap data yang ada pada database akan dibedakan berdasarkan schema yang merepresentasikan model dari data yang digunakan.
+Pada sistem yang kami buat, schema tersebut terdiri atas schema untuk pengguna, jenis produk, dokumen, dokumen bongkar basket, dokumen muat palet, data basket, serta data palet.
+\vspace{0.5ex}
+
+Pada schema pengguna, seperti yang terlihat pada kode program \ref{lst:schemaPengguna}, data yang dimiliki oleh pengguna adalah username dan password yang digunakan untuk login akun, fullname sebagai keterangan nama lengkap dari pengguna, serta status verified dan admin dari pengguna tersebut.
+Untuk menjaga keamanan dari akun pengguna, sistem hanya menyimpan password dari akun pengguna dalam bentuk hash dan bukan dalam bentuk yang sebenarnya.
+\vspace{0.5ex}
+
+\begin{lstlisting}[
+  language=C,
+  label={lst:schemaPengguna},
+  caption={Schema Data Pengguna}
+]
+let schema = mongoose.Schema(
+  {
+    username: String,
+    fullname: String,
+    password: String,
+    verified: Boolean,
+    admin: Boolean,
+  },
+  { timestamp: true },
+);
+\end{lstlisting}
+\vspace{0.5ex}
+
+Pada schema jenis produk, seperti yang terlihat pada kode program \ref{lst:schemaJenisProduk}, data yang dimiliki oleh jenis produk adalah nama dari produk tersebut serta tiga parameter lain yang digunakan untuk kalkulasi jumlah kaleng.
+Ketiga parameter tersebut dibutuhkan karena tidak semua jenis produk memiliki perbandingan nilai yang sama untuk kalkulasi.
+\vspace{0.5ex}
+
+\begin{lstlisting}[
+  language=C,
+  label={lst:schemaJenisProduk},
+  caption={Schema Data Jenis Produk}
+]
+let schema = mongoose.Schema(
+  {
+    name: String,
+    cansPerBasketTray: Number,
+    cansPerPalletLayer: Number,
+    cansPerCase: Number,
+  },
+  { timestamp: true },
+);
+\end{lstlisting}
+\vspace{0.5ex}
+
+Pada schema dokumen, seperti yang terlihat pada kode program \ref{lst:schemaDokumen}, data yang dimiliki oleh dokumen adalah nama dari dokumen itu sendiri, id dari data jenis produk, serta tanggal produksi.
+Schema dokumen ini digunakan untuk merepresentasikan satu kesatuan dokumen bongkar basket dan muat palet yang saling berkaitan, karena pada PT Aneka Tuna Indonesia, proses administrasi ketika bongkar basket dan muat palet dilakukan secara berurutan.
+\vspace{0.5ex}
+
+\begin{lstlisting}[
+  language=C,
+  label={lst:schemaDokumen},
+  caption={Schema Data Dokumen}
+]
+let schema = mongoose.Schema(
+  {
+    name: String,
+    productKindId: String,
+    productionDate: String,
+  },
+  { timestamp: true },
+);
+\end{lstlisting}
+\vspace{0.5ex}
+
+Pada schema dokumen bongkar basket, seperti yang terlihat pada kode program \ref{lst:schemaBongkarBasket}, data yang dimiliki oleh dokumen bongkar basket adalah id dari data dokumen, tanggal bongkar, serta line yang digunakan saat melakukan proses pembongkaran ke basket.
+\vspace{0.5ex}
+
+\begin{lstlisting}[
+  language=C,
+  label={lst:schemaBongkarBasket},
+  caption={Schema Data Dokumen Bongkar Basket}
+]
+let schema = mongoose.Schema(
+  {
+    documentId: String,
+    unloadDate: String,
+    line: String,
+  },
+  { timestamp: true },
+);
+\end{lstlisting}
+\vspace{0.5ex}
+
+Pada schema dokumen muat palet, seperti yang terlihat pada kode program \ref{lst:schemaMuatPalet}, data yang dimiliki oleh dokumen muat palet adalah id dari data dokumen, tanggal muat, serta nama merek dari barang yang akan diproduksi oleh perusahaan.
+\vspace{0.5ex}
+
+\begin{lstlisting}[
+  language=C,
+  label={lst:schemaMuatPalet},
+  caption={Schema Data Dokumen Muat Palet}
+]
+let schema = mongoose.Schema(
+  {
+    documentId: String,
+    loadDate: String,
+    brand: String,
+  },
+  { timestamp: true },
+);
+\end{lstlisting}
+\vspace{0.5ex}
+
+Pada schema data basket, seperti yang terlihat pada kode program \ref{lst:schemaBasket}, data yang dimiliki oleh basket terdiri atas id data dokumen, nomor basket, id basket, waktu mulai dan selesai, jumlah tray, jumlah kaleng sisa, jumlah rijek, jenis rijek jika ada, serta 3 parameter kondisi yang digunakan untuk menguji kelayakan dari produk yang ada pada basket.
+\vspace{0.5ex}
+
+\begin{lstlisting}[
+  language=C,
+  label={lst:schemaBasket},
+  caption={Schema Data Basket}
+]
+let schema = mongoose.Schema(
+  {
+    documentId: String,
+    basketNumber: Number,
+    basketId: Number,
+    startTime: String,
+    endTime: String,
+    trayQuantity: Number,
+    canQuantity: Number,
+    rejectQuantity: Number,
+    rejectKind: String,
+    seamingCondition: Boolean,
+    canMarkCondition: Boolean,
+    indicatorCondition: Boolean,
+  },
+  { timestamp: true },
+);
+\end{lstlisting}
+\vspace{0.5ex}
+
+Pada schema data palet, seperti yang terlihat pada kode program \ref{lst:schemaPalet}, data yang dimiliki oleh palet terdiri atas id data dokumen, nomor palet, nomor keranjang sebelumnya yang masuk ke palet, waktu mulai dan selesai, jumlah layer, jumlah kaleng sisa, nama dari pekerja yang melakukan proses muat palet, serta beberapa parameter lain yang digunakan untuk menguji kelayakan produk ketika proses muat palet.
+\vspace{0.5ex}
+
+\begin{lstlisting}[
+  language=C,
+  label={lst:schemaPalet},
+  caption={Schema Data Palet}
+]
+let schema = mongoose.Schema(
+  {
+    documentId: String,
+    palletNumber: Number,
+    basketNumbers: [Number],
+    startTime: String,
+    endTime: String,
+    layerQuantity: Number,
+    canQuantity: Number,
+    loader: String,
+    seamingCondition: Boolean,
+    cleanCondition: Boolean,
+    noRustCondition: Boolean,
+    noOilyCondition: Boolean,
+    bottomPrintResult: Boolean,
+    middlePrintResult: Boolean,
+    topPrintResult: Boolean,
+    remarks: String,
+  },
+  { timestamp: true },
+);
+\end{lstlisting}
 \vspace{0.5ex}
 
 \subsection{Implementasi \emph{REST API}}
@@ -64,38 +229,4 @@ Untuk Detail lebih lengkap dari kode program sistem yang kami buat bisa dilihat 
 \vspace{1ex}
 
 Aplikasi diimplementasikan dengan \lipsum[2]
-\vspace{0.5ex}
-
-% Digunakan untuk page break
-\newpage
-
-% Contoh pembuatan code snippet
-\begin{lstlisting}[
-  language=C++,
-  label={lst:helloWorld},
-  caption={Hello World}
-]
-#include <iostream>
-
-int main() {
-    std::cout << "Hello World!";
-    return 0;
-}
-\end{lstlisting}
-\vspace{0.5ex}
-
-% Contoh penggunaan referensi dari code snippet yang diinputkan
-Seperti contoh pada baris program \ref{lst:helloWorld} dan \ref{lst:bilanganPrima}, \lipsum[3]
-\vspace{0.5ex}
-
-% Contoh input code snippet
-\lstinputlisting[
-  % Bahasa yang digunakan oleh code snippet
-  language=Python,
-  % Label referensi dari code snippet yang diinputkan
-  label={lst:bilanganPrima},
-  % Keterangan dari code snippet yang diinputkan
-  caption={Perhitungan Bilangan Prima}
-% Nama dari file code snippet yang diinputkan
-]{program/prime-number.py}
 \vspace{0.5ex}
