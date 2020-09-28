@@ -222,7 +222,85 @@ let schema = mongoose.Schema(
 \subsection{Implementasi \emph{REST API}}
 \vspace{1ex}
 
-\lipsum[4]
+Pembuatan \emph{REST API} pada sistem yang kami buat membutuhkan dua library tambahan yakni \emph{Express} yang digunakan sebagai penyedia \emph{REST API} pada server dan \emph{Axios} yang digunakan untuk mengakses \emph{REST API} tersebut pada client.
+\emph{REST API} yang digunaka pada sistem yang kami buat terdiri atas \emph{API} untuk autentikasi, pengguna, data dokumen, data jenis produk, data bongkar basket, data muat palet, data basket, dan data palet.
+Masing-masing \emph{API} tersebut akan terbagi atas 3 bagian yang berupa route untuk mengatur alamat dari \emph{API} tersebut pada server, controller yang berisi proses yang akan dilakukan ketika \emph{API} tersebut dipanggil, dan service yang digunakan pada client untuk memanggil \emph{API} tersebut.
+\vspace{0.5ex}
+
+Sebagai contoh, pada implementasi \emph{API} data dokumen, seperti yang terlihat pada kode program route \ref{lst:routeDokumen}, \emph{API} yang dibuat dapat dipanggil menggunakan berbagai macam metode request pada alamat tertentu yang kemudian akan memanggil proses yang dilakukan oleh controller dari \emph{API} tersebut.
+Untuk menghindari pengguna yang belum login untuk mengakses \emph{API} ini, maka dibutuhkan layer tambahan yang digunakan untuk melakukan pengecekan token request, jika pengecekan gagal maka \emph{API} akan merespon request dengan error.
+\vspace{0.5ex}
+
+\begin{lstlisting}[
+  language=C,
+  label={lst:routeDokumen},
+  caption={Route \emph{API} Dokumen}
+]
+module.exports = (app) => {
+  const express = require('express');
+  var router = express.Router();
+
+  const { authJwt } = require('../middlewares');
+
+  const controller = require('../controllers/document.controller.js');
+
+  router.get('/', [ authJwt.verifyToken ], controller.findAll);
+  router.post('/', [ authJwt.verifyToken ], controller.create);
+
+  router.get('/:documentId', [ authJwt.verifyToken ], controller.findOne);
+  router.put('/:documentId', [ authJwt.verifyToken ], controller.update);
+  router.delete('/:documentId', [ authJwt.verifyToken ], controller.remove);
+
+  app.use('/api/document', router);
+};
+\end{lstlisting}
+\vspace{0.5ex}
+
+Kemudian sebagai contoh implementasi controller untuk penambahan data dokumen, seperti yang terlihat pada kode program \ref{lst:controllerDokumen}, proses dari controller tersebut adalah dengan mengambil data yang disematkan pada request, dan kemudian memanggil fungsi yang ada pada \emph{Mongoose} untuk menambahkan data pada database.
+Setelah proses tersebut selesai, maka controller akan memberi respon kepada client, sesuai dengan hasil dari penambahan data tersebut ke database, apakah berhasil atau gagal.
+\vspace{0.5ex}
+
+\begin{lstlisting}[
+  language=C,
+  label={lst:controllerDokumen},
+  caption={Controller Penambahan Data Dokumen}
+]
+exports.create = (req, res) => {
+  if (!req.body) {
+    return res.status(400).send({ message: 'content could not be empty!' });
+  }
+
+  const document = new Document({
+    name: req.body.name,
+    productKindId: req.body.productKindId,
+    productionDate: req.body.productionDate,
+  });
+
+  document.save(document)
+    .then(() => {
+      res.send({ message: 'document was created successfully' });
+    })
+    .catch((err) => {
+      res.status(500).send({ message: err.message });
+    });
+};
+\end{lstlisting}
+\vspace{0.5ex}
+
+Terakhir, sebagai contoh implementasi service untuk penambahan data dokumen, seperti yang telihat pada kode program \ref{lst:serviceDokumen}, service yang ada akan mengembalikan object axios yang digunakan untuk memanggil request post pada alamat tersebut menggunakan data yang diberikan.
+Karena pada route sebelumnya terdapat layer tambahan yang digunakan untuk melakukan pengecekan token request, maka agar request berhasil, diperlukan adanya header autentikasi yang akan disematkan pada request tersebut.
+\vspace{0.5ex}
+
+\begin{lstlisting}[
+  language=C,
+  label={lst:serviceDokumen},
+  caption={Service \emph{API} Dokumen}
+]
+create(data) {
+  let config = { headers: AuthService.header() };
+  return http.post('/api/document', data, config);
+}
+\end{lstlisting}
 \vspace{0.5ex}
 
 \subsection{Implementasi Aplikasi}
