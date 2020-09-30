@@ -9,44 +9,60 @@
 
 \section{\emph{Node.js}}
 \vspace{1ex}
-Node.js adalah open source, cross-platform, back end, JavaScript runtime environment yang mengeksekusi kode 
-JavaScript di luar web browser. 
-Node.js memungkinkan pengembang menggunakan JavaScript untuk menulis alat baris 
-perintah dan skrip untuk menjalankan server-side scripting untuk menghasilkan konten halaman web dinamis sebelum
-halaman dikirim ke browser Web pengguna. 
-Node.js menyatukan pengembangan aplikasi web di satu bahasa pemrograman.
+
+\emph{Node.js} merupakan \emph{runtime environment} untuk bahasa \emph{JavaScript} yang membuat bahasa tersebut bisa dieksekusi diluar \emph{web browser}.
+Umumnya \emph{Node.js} ini digunakan untuk membuat \emph{command line tools} dan untuk membuat program pada server.
+Selain itu, \emph{Node.js} juga membantu pengembangan program berbahasa \emph{JavaScript} dengan memperkenalkan fitur modules dan packages, sehingga lebih banyak fitur yang bisa digunakan dalam pengembangan tanpa perlu menulis ulang kode program tersebut.
+Saat ini, \emph{Node.js} sering kali digunakan sebagai alternatif dari \emph{PHP} untuk melakaukan \emph{server-side scripting}.
 \vspace{0.5ex}
 
 \section{\emph{Document-oriented Database}}
 \vspace{1ex}
-Document-oriented database adalah program komputer yang dirancang untuk menyimpan, mengambil, dan mengelola 
-informasi berorientasi dokumen.
-Document-oriented database adalah salah satu kategori utama database NoSQL. 
-Konsep sentral dari Document-oriented database adalah pengertian tentang dokumen. Secara umum, 
-mereka semua menganggap dokumen mengenkapsulasi dan menyandikan data (atau informasi) dalam beberapa format 
-standar atau pengkodean. Pengkodean yang digunakan termasuk XML, YAML, JSON, serta bentuk biner seperti BSON.
+
+\emph{Document-oriented database} merupakan salah satu bentuk database dimana data yang ada disimpan dalam bentuk document yang menyerupai \emph{JSON}.
+Database ini umumnya dikenal juga sebagai \emph{NoSql} (\emph{not only SQL}) karena berbeda dengan database pada umumnya yang disimpan dalam bentuk tabel terpisah yang saling memiliki relasi.
+\vspace{0.5ex}
+
+Beberapa keunggulan dari \emph{Document-oriented database} dibandingkan dengan database \emph{SQL} pada umumnya adalah sebagai berikut:
+\vspace{0.5ex}
+
+\begin{enumerate}[nolistsep]
+
+  \item Memiliki model data yang intuitif, sehingga mudah dipahami dan dibuat oleh pengembang dan bisa langsung menyesuaikan objek yang ada pada baris program.
+  \vspace{0.5ex}
+
+  \item Skema yang fleksibel dan scalable, sehingga perubahan dari struktur data yang ada tidak akan banyak mempengaruhi data yang lain.
+  Selain itu isi dari suatu data bisa berbeda dengan data yang lain tanpa adanya masalah.
+  \vspace{0.5ex}
+
+  \item Struktur database yang mennyerupai JSON mempermudah transfer data melalui internet karena umumnya data yang ada di internet dikirim dalam bentuk JSON.
+  \vspace{0.5ex}
+
+\end{enumerate}
 \vspace{0.5ex}
 
 \subsection{\emph{MongoDB}}
 \vspace{1ex}
-MongoDB adalah program cross-platform untuk document-oriented database dan diklasifikasikan sebagai program database 
-NoSQL. MongoDB menggunakan dokumen dengan skema opsional yang fleksibel seperti JSON, yang berarti bidang dapat 
-bervariasi dari dokumen ke dokumen dan struktur data dapat diubah seiring waktu. MongoDB adalah basis data yang 
-terdistribusi pada intinya, sehingga ketersediaan, penskalaan, dan distribusi dapat dengan mudah 
-dibangun dan digunakan.
+
+\emph{MongoDB} merupakan salah satu sistem yang menerapkan database dalam bentuk \emph{document-oriented}.
+Database ini pertama kali diluncurkan 2009 oleh \emph{MongoDB Inc.} dan bisa diakses menggunakan berbagai macam bahasa seperti \emph{C++}, \emph{Go}, \emph{JavaScript}, dan \emph{Python}.
+Untuk saat ini setidaknya terdapat dua versi dari \emph{MongoDB}, yang pertama merupakan versi \emph{Enterprise} yang ditujukan untuk kalangan bisnis dan perusahaan besar, dan yang kedua merupakan versi \emph{Community} yang bersifat \emph{open-source} dan bisa diakses secara gratis.
 \vspace{0.5ex}
 
 \subsection{\emph{Mongoose}}
 \vspace{1ex}
 
-\lipsum[4]
+\emph{Mongoose} merupakan tools yang digunakan pada program yang dibuat dengan \emph{Node.js} untuk mengakses database yang ada di \emph{MongoDB}.
+Umumnya, \emph{Mongoose} digunakan untuk membuat schema atau model objek dari data yang akan disimpan di \emph{MongoDB}.
+Selain itu tools ini juga bisa digunakan untuk menambahkan, mengubah, serta menghapus data yang ada di \emph{MongoDB} dengan query yang sudah ditentukan.
+Dan juga sama seperti library di \emph{Node.js} lainnya yang bekerja secara \emph{asynchronous}, library ini bisa digunakan untuk mengakses database melalui fitur promises maupun callbacks yang ada di \emph{JavaScript}.
 \vspace{0.5ex}
 
 \section{\emph{Representational State Transfer API} (\emph{REST API})}
 \vspace{1ex}
 Representational state transfer (REST) adalah gaya arsitektur perangkat lunak yang mendefinisikan sekumpulan constrain
-yang akan digunakan untuk membuat layanan Web. Layanan web yang sesuai dengan gaya arsitektur REST disebut 
-layanan Web RESTful yang menyediakan interoperabilitas antara sistem komputer di internet. Layanan Web RESTful 
+yang akan digunakan untuk membuat layanan Web. Layanan web yang sesuai dengan gaya arsitektur REST disebut
+layanan Web RESTful yang menyediakan interoperabilitas antara sistem komputer di internet. Layanan Web RESTful
 memungkinkan sistem yang meminta untuk mengakses dan memanipulasi representasi tekstual dari Web resources
 dengan menggunakan serangkaian operasi tanpa pernyataan yang seragam dan telah ditentukan sebelumnya.
 
@@ -55,10 +71,10 @@ dengan menggunakan serangkaian operasi tanpa pernyataan yang seragam dan telah d
 
 \subsection{\emph{Express}}
 \vspace{1ex}
-Express.js, atau Express, adalah kerangka aplikasi web back end untuk Node.js, dirilis sebagai free open-source 
-software di bawah Lisensi MIT. Express.js dirancang untuk membangun aplikasi web dan API dan merupakan 
-framework server standar untuk Node.js. Express js. dideskripsikannya sebagai server yang terinspirasi dari Sinatra, 
-yang berarti bahwa server ini relatif minimalis dengan banyak fitur yang tersedia sebagai plugin. Express adalah 
+Express.js, atau Express, adalah kerangka aplikasi web back end untuk Node.js, dirilis sebagai free open-source
+software di bawah Lisensi MIT. Express.js dirancang untuk membangun aplikasi web dan API dan merupakan
+framework server standar untuk Node.js. Express js. dideskripsikannya sebagai server yang terinspirasi dari Sinatra,
+yang berarti bahwa server ini relatif minimalis dengan banyak fitur yang tersedia sebagai plugin. Express adalah
 komponen back-end dari MEAN stack, bersama dengan perangkat lunak database MongoDB dan framework front-end AngularJS.
 \vspace{0.5ex}
 
@@ -70,31 +86,31 @@ komponen back-end dari MEAN stack, bersama dengan perangkat lunak database Mongo
 
 \section{\emph{Progressive Web App} (\emph{PWA})}
 \vspace{1ex}
-Progressive Web App (PWA) adalah jenis perangkat lunak aplikasi yang dikirimkan melalui web, dibuat menggunakan 
-teknologi web umum seperti HTML, CSS, dan JavaScript untuk bekerja pada platform apa pun yang menggunakan browser 
+Progressive Web App (PWA) adalah jenis perangkat lunak aplikasi yang dikirimkan melalui web, dibuat menggunakan
+teknologi web umum seperti HTML, CSS, dan JavaScript untuk bekerja pada platform apa pun yang menggunakan browser
 yang sesuai standar, termasuk desktop dan perangkat seluler.
-Fitur PWA memungkinkan untuk menutup celah ke aplikasi asli dan menciptakan pengalaman pengguna yang serupa seperti 
-bekerja secara offline, performa yang cepat, akses ke dalam sensor ponsel, dukungan untuk push notification, dan 
+Fitur PWA memungkinkan untuk menutup celah ke aplikasi asli dan menciptakan pengalaman pengguna yang serupa seperti
+bekerja secara offline, performa yang cepat, akses ke dalam sensor ponsel, dukungan untuk push notification, dan
 ikon di layar beranda ponsel.
 \vspace{0.5ex}
 
 \subsection{\emph{Vue.js}}
 \vspace{1ex}
-Vue.js adalah open-source framework front-end JavaScript untuk membangun antarmuka 
+Vue.js adalah open-source framework front-end JavaScript untuk membangun antarmuka
 pengguna dan aplikasi pada satu halaman.
-Vue.js menampilkan arsitektur yang dapat disesuaikan secara bertahap yang berfokus pada rendering deklaratif dan 
-komposisi komponen dengan inti Library yang difokuskan pada lapisan tampilan saja. Fitur-fitur canggih yang 
-diperlukan untuk aplikasi kompleks seperti perutean, manajemen status, dan perkakas build ditawarkan melalui 
+Vue.js menampilkan arsitektur yang dapat disesuaikan secara bertahap yang berfokus pada rendering deklaratif dan
+komposisi komponen dengan inti Library yang difokuskan pada lapisan tampilan saja. Fitur-fitur canggih yang
+diperlukan untuk aplikasi kompleks seperti perutean, manajemen status, dan perkakas build ditawarkan melalui
 Library dan paket pendukung yang dikelola secara resmi.
-Vue.js memungkinkan kita untuk memperluas HTML dengan atribut HTML yang disebut directives. Directives menawarkan 
+Vue.js memungkinkan kita untuk memperluas HTML dengan atribut HTML yang disebut directives. Directives menawarkan
 fungsionalitas ke aplikasi HTML, dan datang sebagai bawaan atau yang ditentukan pengguna.
 \vspace{0.5ex}
 
 \subsection{\emph{Vuetify}}
 \vspace{1ex}
-Vuetify adalah Library antarmuka Vue dengan Komponen Material untuk memperindah tampilan. 
-Tujuan Vuetify adalah menyediakan semua yang dibutuhkan pengguna untuk membangun aplikasi web yang indah dan 
-menarik menggunakan spesifikasi Desain Material dan dengan siklus pembaruan yang konsisten, 
-Dukungan Jangka Panjang (LTS), keterlibatan komunitas yang responsif, ekosistem sumber daya yang luas, 
+Vuetify adalah Library antarmuka Vue dengan Komponen Material untuk memperindah tampilan.
+Tujuan Vuetify adalah menyediakan semua yang dibutuhkan pengguna untuk membangun aplikasi web yang indah dan
+menarik menggunakan spesifikasi Desain Material dan dengan siklus pembaruan yang konsisten,
+Dukungan Jangka Panjang (LTS), keterlibatan komunitas yang responsif, ekosistem sumber daya yang luas,
 dan dedikasi pada komponen berkualitas.
 \vspace{0.5ex}
