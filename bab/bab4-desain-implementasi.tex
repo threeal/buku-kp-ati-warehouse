@@ -16,7 +16,7 @@ Sistem ini nantinya akan dibuat menggunakan \emph{Node.js} sebagai kerangka utam
 
 Pada PT. Aneka Tuna Indoensia, administrasi loading barang dilakukan oleh petugas tertentu yang memiliki jadwal kerja yang berbeda.
 Untuk itu diperlukan sistem akun yang bisa digunakan oleh petugas-petugas tersebut untuk melakukan pencatatan, sehingga hanya petugas-petugas tersebut dan beberapa pihak lain yang bisa mengakses data yang ada pada sistem.
-Selain itu untuk mempermudah pencatatan terutama di sisi mobilitas, sistem yang kami buat juga mendukung adanya PWA sehingga website yang ada bisa dengan mudah terpasang pada perangkat mobile layaknya aplikasi pada umumnya.
+Selain itu untuk mempermudah pencatatan, sistem yang kami buat juga mendukung adanya PWA sehingga website yang ada bisa dengan mudah terpasang pada perangkat mobile layaknya aplikasi pada umumnya.
 \vspace{0.5ex}
 
 \section{Spesifikasi Kasus Penggunaan}
@@ -62,6 +62,8 @@ Pada schema pengguna, seperti yang terlihat pada kode program \ref{lst:schemaPen
 Untuk menjaga keamanan dari akun pengguna, sistem hanya menyimpan password dari akun pengguna dalam bentuk hash dan bukan dalam bentuk yang sebenarnya.
 \vspace{0.5ex}
 
+\newpage
+
 \begin{lstlisting}[
   language=C,
   label={lst:schemaPengguna},
@@ -104,6 +106,8 @@ let schema = mongoose.Schema(
 Pada schema dokumen, seperti yang terlihat pada kode program \ref{lst:schemaDokumen}, data yang dimiliki oleh dokumen adalah nama dari dokumen itu sendiri, id dari data jenis produk, serta tanggal produksi.
 Schema dokumen ini digunakan untuk merepresentasikan satu kesatuan dokumen bongkar basket dan muat palet yang saling berkaitan, karena pada PT Aneka Tuna Indonesia, proses administrasi ketika bongkar basket dan muat palet dilakukan secara berurutan.
 \vspace{0.5ex}
+
+\newpage
 
 \begin{lstlisting}[
   language=C,
@@ -158,6 +162,8 @@ let schema = mongoose.Schema(
 );
 \end{lstlisting}
 \vspace{0.5ex}
+
+\newpage
 
 Pada schema data basket, seperti yang terlihat pada kode program \ref{lst:schemaBasket}, data yang dimiliki oleh basket terdiri atas id data dokumen, nomor basket, id basket, waktu mulai dan selesai, jumlah tray, jumlah kaleng sisa, jumlah rijek, jenis rijek jika ada, serta 3 parameter kondisi yang digunakan untuk menguji kelayakan dari produk yang ada pada basket.
 \vspace{0.5ex}
@@ -230,6 +236,8 @@ Masing-masing \emph{API} tersebut akan terbagi atas 3 bagian yang berupa route u
 Sebagai contoh, pada implementasi \emph{API} data dokumen, seperti yang terlihat pada kode program route \ref{lst:routeDokumen}, \emph{API} yang dibuat dapat dipanggil menggunakan berbagai macam metode request pada alamat tertentu yang kemudian akan memanggil proses yang dilakukan oleh controller dari \emph{API} tersebut.
 Untuk menghindari pengguna yang belum login untuk mengakses \emph{API} ini, maka dibutuhkan layer tambahan yang digunakan untuk melakukan pengecekan token request, jika pengecekan gagal maka \emph{API} akan merespon request dengan error.
 \vspace{0.5ex}
+
+\newpage
 
 \begin{lstlisting}[
   language=C,
@@ -310,6 +318,8 @@ Sistem yang kami buat menggunakan \emph{Vue.js} sebagai framework yang digunakan
 Pada aplikasi berbasis \emph{Vue.js}, tampilan dari aplikasi akan terpisah menjadi beberapa component utama, setiap component tersebut umumnya terdiri atas template yang merupakan bentuk \emph{HTML} dari aplikasi yang dibuat dan script yang berupa isi program yang akan mengatur component tersebut.
 \vspace{0.5ex}
 
+\newpage
+
 Sebagai contoh implementasi dari component yang bertugas untuk menambahkan data dokumen, seperti yang terlihat pada kode program bagian template \ref{lst:templateDokumen} dan script \ref{lst:scriptDokumen}, bagian template digunakan untuk menentukan tampilan dari aplikasi dan hal hal yang akan mempengaruhi bentuk tampilan tersebut, sebagai contoh component v-button akan muncul atau menghilang bergantung dengan status dari variabel cancelCallback yang berupa fungsi atau bukan.
 \vspace{0.5ex}
 
@@ -364,6 +374,8 @@ Sebagai contoh, ketika method onAdd() terpanggil, maka component akan memanggil 
 </v-card>
 \end{lstlisting}
 \vspace{0.5ex}
+
+\newpage
 
 \begin{lstlisting}[
   language=C,
