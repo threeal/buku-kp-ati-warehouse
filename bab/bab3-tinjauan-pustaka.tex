@@ -60,28 +60,51 @@ Dan juga sama seperti library di \emph{Node.js} lainnya yang bekerja secara \emp
 
 \section{\emph{Representational State Transfer API} (\emph{REST API})}
 \vspace{1ex}
-Representational state transfer (REST) adalah gaya arsitektur perangkat lunak yang mendefinisikan sekumpulan constrain
-yang akan digunakan untuk membuat layanan Web. Layanan web yang sesuai dengan gaya arsitektur REST disebut
-layanan Web RESTful yang menyediakan interoperabilitas antara sistem komputer di internet. Layanan Web RESTful
-memungkinkan sistem yang meminta untuk mengakses dan memanipulasi representasi tekstual dari Web resources
-dengan menggunakan serangkaian operasi tanpa pernyataan yang seragam dan telah ditentukan sebelumnya.
 
-\lipsum[5]
+\emph{Representational state transfer} (\emph{REST}) merupakan salah satu gaya arsitektur untuk distributed hypermedia system yang pertama kali dicetuskan oleh Roy Fielding pada tahun 2000 \citep{rest}.
+Kunci dari arsitektur \emph{REST} ini adalah adanya resource.
+Setiap informasi yang bisa diberi nama adalah resource, mulai dari dokumen atau gambar, service, kumpulan data, dan lain sebagainya.
+Selain itu pada \emph{REST} juga dikenal istilah resource methods yang berupa \emph{GET} yang digunakan untuk mengambil resource dari server, \emph{POST} yang digunakan untuk menambah resource baru, \emph{DELETE} yang digunakan utnuk menghapus resource yang ada, dan lain sebagainya.
+\vspace{0.5ex}
+
+Sama seperti gaya arsitektur yang lain, \emph{REST} juga mengenal adanya konstrain yang diperlukan agar suatu sistem dapat dikatakn sebagai \emph{RESTful}.
+Konstrain tersebut adalah sebagai berikut:
+\vspace{0.5ex}
+
+\begin{enumerate}[nolistsep]
+
+  \item Pemisahan antara client dan server sehingga bisa meningkatkan skalabilitas sistem pada berbagai macam platform.
+  \vspace{0.5ex}
+
+  \item Data yang request yang dikirim oleh client harus bersifat stateless, mengandung semua informasi yang dibutuhkan untuk memahami isi dari request tersebut.
+  \vspace{0.5ex}
+
+  \item Data yang direquest harus bisa digunakan kembali semisal client meminta hal tersebut, hal ini ditujukan untuk mengurangi request data yang sama berulang kali.
+  \vspace{0.5ex}
+
+  \item Interface yang uniform, sehingga bisa digunakan di berbagai macam platform.
+  \vspace{0.5ex}
+
+  \item Sistem yang bertingkat, sehingga pengembang hanya perlu fokus pada pengembangan di tingkat tertinggi yang diperlukan tanpa perlu ikut campur pada sistem yang ada di bawah.
+  \vspace{0.5ex}
+
+\end{enumerate}
 \vspace{0.5ex}
 
 \subsection{\emph{Express}}
 \vspace{1ex}
-Express.js, atau Express, adalah kerangka aplikasi web back end untuk Node.js, dirilis sebagai free open-source
-software di bawah Lisensi MIT. Express.js dirancang untuk membangun aplikasi web dan API dan merupakan
-framework server standar untuk Node.js. Express js. dideskripsikannya sebagai server yang terinspirasi dari Sinatra,
-yang berarti bahwa server ini relatif minimalis dengan banyak fitur yang tersedia sebagai plugin. Express adalah
-komponen back-end dari MEAN stack, bersama dengan perangkat lunak database MongoDB dan framework front-end AngularJS.
+
+\emph{Express}, dikenal juga sebagai \emph{Express.js}, merupakan \emph{framework back-end} untuk \emph{Node.js} yang dirilis sebagai \emph{free open-source} di bawah lisensi \emph{MIT}.
+Framework ini dirancang untuk membangun aplikasi web dan API yang terinspirasi dari \emph{Sinatra}, \emph{framework back-end} berbahasa \emph{Ruby} yang relatif minimalis dan memiliki banyak fitur yang tersedia sebagai plugin.
+Umumnya, framework ini digunakan bersamaan dengan beberapa komponene lain seperti \emph{Node.js}, \emph{MongoDB}, dan \emph{AngularJS} untuk membentuk \emph{MEAN} stack, sebuah alternatif dari \emph{XAMPP} yang dulunya banyak digunakan.
 \vspace{0.5ex}
 
 \subsection{\emph{Axios}}
 \vspace{1ex}
 
-\lipsum[7]
+\emph{Axios} merupakan library pada \emph{JavaScript} yang digunakan sebagai \emph{HTTP client} pada web browser.
+Library ini merupakan salah satu library yang bisa digunakan untuk mengakses \emph{REST API} secara \emph{asynchronous}.
+Sama seperti prinsip pemrograman browser yang ada di \emph{JavaScript}, dengan sifat yang \emph{asynchronous} ini, sebuah proses request tidak akan mengganggu proses yang lain yang ada di client, sukses gagalnya dari proses tersebut bisa diatur menggunakan promises maupun callbacks yang ada pada \emph{JavaScript}.
 \vspace{0.5ex}
 
 \section{\emph{Progressive Web App} (\emph{PWA})}
