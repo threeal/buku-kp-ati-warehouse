@@ -7,65 +7,139 @@
 
 % Ubah konten-konten berikut sesuai dengan yang ingin diisi pada bab ini
 
-\section{Roket Luar Angkasa}
+\section{\emph{Node.js}}
 \vspace{1ex}
 
-% Contoh input gambar dengan format *.jpg
-\begin{figure} [ht] \centering
-  % Nama dari file gambar yang diinputkan
-	\includegraphics[scale=0.45]{gambar/space-shuttle.jpg}
-  % Keterangan gambar yang diinputkan
-	\caption{Peluncuran Pesawat Luar Angkasa \emph{Discovery}}
-  % Label referensi dari gambar yang diinputkan
-	\label{fig:spaceShuttle}
-\end{figure}
-
-Roket luar angkasa merupakan \lipsum[1]
+\emph{Node.js} merupakan \emph{runtime environment} untuk \emph{JavaScript} yang mampu membuat bahasa tersebut bisa dieksekusi diluar \emph{web browser}.
+Umumnya \emph{Node.js} ini digunakan untuk membuat \emph{command line tools} dan untuk membuat program pada server.
+Selain itu, \emph{Node.js} juga membantu pengembangan program berbahasa \emph{JavaScript} dengan memperkenalkan fitur modules dan packages, sehingga lebih banyak fitur yang bisa digunakan dalam pengembangan tanpa perlu menulis ulang kode program tersebut.
+Saat ini, \emph{Node.js} sering kali digunakan sebagai alternatif dari \emph{PHP} untuk melakaukan \emph{server-side scripting}.
 \vspace{0.5ex}
 
-% Contoh penggunaan referensi dari gambar yang diinputkan
-\emph{Discovery} \ref{fig:spaceShuttle} merupakan \lipsum[2]
+\section{\emph{Document-oriented Database}}
+\vspace{1ex}
 
-Beberapa keunggulan dari \lipsum[3][1-2] adalah:
+\emph{Document-oriented database} merupakan salah satu bentuk database dimana data yang ada disimpan dalam bentuk document yang menyerupai \emph{JSON}.
+Database ini umumnya dikenal juga sebagai \emph{NoSql} (\emph{not only SQL}) karena berbeda dengan database \emph{SQL} pada umumnya yang disimpan dalam bentuk tabel terpisah yang saling memiliki relasi.
+\vspace{0.5ex}
+
+Beberapa keunggulan dari \emph{Document-oriented database} ini dibandingkan dengan database \emph{SQL} pada umumnya adalah sebagai berikut:
 \vspace{0.5ex}
 
 \begin{enumerate}[nolistsep]
 
-  \item Mempermudah \lipsum[1][1-2]
+  \item Memiliki model data yang intuitif, sehingga mudah dipahami dan dibuat oleh pengembang dan bisa langsung menyesuaikan objek yang ada pada baris program.
   \vspace{0.5ex}
 
-  \item \lipsum[1][3-4]
+  \item Skema yang fleksibel dan scalable, sehingga perubahan dari struktur data yang ada tidak akan banyak mempengaruhi data yang lain.
+  Selain itu isi dari suatu data bisa berbeda dengan data yang lain tanpa adanya masalah.
+  \vspace{0.5ex}
+
+  \item Struktur database yang mennyerupai JSON mempermudah transfer data melalui internet karena umumnya data yang ada di internet dikirim dalam bentuk JSON.
   \vspace{0.5ex}
 
 \end{enumerate}
 \vspace{0.5ex}
 
-\section{Gravitasi}
+\subsection{\emph{MongoDB}}
 \vspace{1ex}
 
-Gravitasi merupakan \lipsum[1]
+\emph{MongoDB} merupakan salah satu sistem yang menerapkan database dalam bentuk \emph{document-oriented}.
+Database ini pertama kali diluncurkan 2009 oleh \emph{MongoDB Inc.} dan bisa diakses menggunakan berbagai macam bahasa seperti \emph{C++}, \emph{Go}, \emph{JavaScript}, dan \emph{Python}.
+Untuk saat ini setidaknya terdapat dua versi dari \emph{MongoDB}, yang pertama merupakan versi \emph{Enterprise} yang ditujukan untuk kalangan bisnis dan perusahaan besar, dan yang kedua merupakan versi \emph{Community} yang bersifat \emph{open-source} dan bisa diakses secara gratis.
 \vspace{0.5ex}
 
-\subsection{Hukum Newton}
+\subsection{\emph{Mongoose}}
 \vspace{1ex}
 
-% Contoh penggunaan referensi dari pustaka
-Newton pernah merumuskan \citep{newtonLaw} bahwa \lipsum[2]
-% Contoh penggunaan referensi dari persamaan
-Kemudian menjadi persamaan seperti pada persamaan \ref{eq:hukumPertama}.
+\emph{Mongoose} merupakan tools yang digunakan pada program yang dibuat dengan \emph{Node.js} untuk mengakses database yang ada di \emph{MongoDB}.
+Umumnya, \emph{Mongoose} digunakan untuk membuat schema atau model objek dari data yang akan disimpan di \emph{MongoDB}.
+Selain itu tools ini juga bisa digunakan untuk menambahkan, mengubah, serta menghapus data yang ada di \emph{MongoDB} dengan query yang sudah ditentukan.
+Dan juga sama seperti library di \emph{Node.js} lainnya yang bekerja secara \emph{asynchronous}, library ini bisa digunakan untuk mengakses database melalui fitur promises maupun callbacks yang ada di \emph{JavaScript}.
 \vspace{0.5ex}
 
-% Contoh pembuatan persamaan
-\begin{equation}
-  % Label referensi dari persamaan yang dibuat
-  \label{eq:hukumPertama}
-  % Baris kode persamaan yang dibuat
-  \sum \mathbf{F} = 0\; \Leftrightarrow\; \frac{\mathrm{d} \mathbf{v} }{\mathrm{d}t} = 0.
-\end{equation}
-\vspace{0.5ex}
-
-\subsection{Anti Gravitasi}
+\section{\emph{Representational State Transfer API} (\emph{REST API})}
 \vspace{1ex}
 
-Anti gravitasi sendiri merupakan \lipsum[3]
+\emph{Representational state transfer} (\emph{REST}) merupakan salah satu gaya arsitektur untuk distributed hypermedia system yang pertama kali dicetuskan oleh Roy Fielding pada tahun 2000 \citep{rest}.
+Kunci dari arsitektur \emph{REST} ini adalah adanya resource.
+Setiap informasi yang bisa diberi nama adalah resource, mulai dari dokumen atau gambar, service, kumpulan data, dan lain sebagainya.
+Selain itu pada \emph{REST} juga dikenal istilah resource methods yang berupa \emph{GET} yang digunakan untuk mengambil resource dari server, \emph{POST} yang digunakan untuk menambah resource baru, \emph{DELETE} yang digunakan utnuk menghapus resource yang ada, dan lain sebagainya.
+\vspace{0.5ex}
+
+Sama seperti gaya arsitektur yang lain, \emph{REST} juga mengenal adanya konstrain yang diperlukan agar suatu sistem dapat dikatakn sebagai \emph{RESTful}.
+Konstrain tersebut adalah sebagai berikut:
+\vspace{0.5ex}
+
+\begin{enumerate}[nolistsep]
+
+  \item Pemisahan antara client dan server sehingga bisa meningkatkan skalabilitas sistem pada berbagai macam platform.
+  \vspace{0.5ex}
+
+  \item Data request yang dikirim oleh client harus bersifat stateless, mengandung semua informasi yang dibutuhkan untuk memahami isi dari request tersebut.
+  \vspace{0.5ex}
+
+  \item Data yang direquest harus bisa digunakan kembali semisal client meminta hal tersebut, hal ini ditujukan untuk mengurangi request data yang sama berulang kali.
+  \vspace{0.5ex}
+
+  \item Interface yang uniform, sehingga bisa digunakan di berbagai macam platform.
+  \vspace{0.5ex}
+
+  \item Sistem yang bertingkat, sehingga pengembang hanya perlu fokus pada pengembangan di tingkat tertinggi yang diperlukan tanpa perlu ikut campur pada sistem yang ada di bawah.
+  \vspace{0.5ex}
+
+\end{enumerate}
+\vspace{0.5ex}
+
+\subsection{\emph{Express}}
+\vspace{1ex}
+
+\emph{Express}, dikenal juga sebagai \emph{Express.js}, merupakan \emph{framework back-end} untuk \emph{Node.js} yang dirilis sebagai \emph{free open-source} di bawah lisensi \emph{MIT}.
+Framework ini dirancang untuk membangun aplikasi web dan API yang terinspirasi dari \emph{Sinatra}, \emph{framework back-end} berbahasa \emph{Ruby} yang relatif minimalis dan memiliki banyak fitur yang tersedia sebagai plugin.
+Umumnya, framework ini digunakan bersamaan dengan beberapa komponene lain seperti \emph{Node.js}, \emph{MongoDB}, dan \emph{AngularJS} untuk membentuk \emph{MEAN} stack, sebuah alternatif dari \emph{XAMPP} yang dulunya banyak digunakan.
+\vspace{0.5ex}
+
+\newpage
+
+\subsection{\emph{Axios}}
+\vspace{1ex}
+
+\emph{Axios} merupakan library pada \emph{JavaScript} yang digunakan sebagai \emph{HTTP client} pada web browser.
+Library ini merupakan salah satu library yang bisa digunakan untuk mengakses \emph{REST API} secara \emph{asynchronous}.
+Sama seperti prinsip pemrograman browser yang ada di \emph{JavaScript}, dengan sifat yang \emph{asynchronous} ini, sebuah proses request tidak akan mengganggu proses yang lain yang ada di client, sukses gagalnya dari proses tersebut bisa diatur menggunakan promises maupun callbacks yang ada pada \emph{JavaScript}.
+\vspace{0.5ex}
+
+\section{\emph{Progressive Web App} (\emph{PWA})}
+\vspace{1ex}
+
+\emph{Progressivw Web App} (\emph{PWA}) merupakan salah satu jenis aplikasi yang secara umum dipasang di website.
+Model aplikasi ini kurang lebih sama dengan website pada umumnya dengan mengusung teknologi yang sama untuk pengembangannya seperti \emph{HTML}, \emph{CSS}, dan \emph{JavaScript} untuk bekerja pada platform manapun yang bisa bekerja dengan web browser.
+\vspace{0.5ex}
+
+Salah satu masalah dari aplikasi yang ada sekarang adalah, pada umumnya aplikasi native memiliki lebih banyak fitur seperti notifikasi, penyimpanan lokal, akses fitur yang ada di perangkat, dan lain sebagainya.
+Namun aplikasi native ini hanya terbatas pada platform tertentu.
+Di sisi lain terdapat website yang mampu dijangkau oleh semua platform secara general, baik desktop maupun mobile dengan berbagai macam distribusinya.
+Namun website terkendala pada sifatnya yang strict dan tidak banyak fitur yang dimiliki dibandingkan dengan aplikasi native.
+Di sini peran dari \emph{PWA} yang berada di tengah antara apliakasi native dan website, yang menjadikan sebuah aplikasi memiliki fitur yang lebih banyak mendekati native apps dan di sisi lain mudah diakses oleh berbagai macam platform yang mampu menjalankan web browser.
+Dengan adanya \emph{PWA} ini, sebuah aplikasi dapat dengan mudah menjangkau berbagai kalangan dan di sisi lain memiliki fitur layaknya aplikasi umumnya seperti penyimpanan lokal, dan aplikasi.
+\vspace{0.5ex}
+
+\newpage
+
+\subsection{\emph{Vue.js}}
+\vspace{1ex}
+
+\emph{Vue.js} merupakan salah satu framework front-end untuk \emph{Javascript} selain \emph{AngularJS} dan \emph{React} yang mampu digunakan untuk membuat antarmuka pada aplikasi yang interaktif dan responsif.
+Secara umum \emph{Vue.js} mengubah baris program \emph{HTML} yang ada dalam bentuk template dan mengubahnya secara berkala ketika ada perubahan data yang berkaitan dengan baris program tersebut.
+Pada \emph{Vue.js}, setiap bagian tatap muka dipisahkan menjadi berbagai macam components yang bisa digunakan secara berulang sehingga mengurangi penulisan program yang sama berulang-ulang.
+Seperti \emph{Node.js}, \emph{Vue.js} juga mengenal packages (plugins) lain yang khusus dibuat untuk menambah fitur yang ada di \emph{Vue.js}.
+Salah satu plugins tersebut adalah plugins \emph{PWA} yang digunakan untuk mengubah \emph{front-end} dari aplikasi yang dibuat agar bisa digunakan sebagai \emph{PWA}.
+\vspace{0.5ex}
+
+\subsection{\emph{Vuetify}}
+\vspace{1ex}
+
+\emph{Vuetify} merupakan library antarmuka yang digunakan untuk memperindah tampilan pada aplikasi yang dibuat menggunakan \emph{Vue.js}.
+Fitur utama dari \emph{Vuetify} ini adalah untuk menyediakan berbagai macam components yang umumnya digunakan dalam pengembangan aplikasi seperti \emph{input field}, \emph{button}, \emph{navigation bar}, dan lain sebagainya.
+Hal yang menarik dari \emph{Vuetify} ini adalah desain yang digunakan mengikuti prinsip \emph{Material Design} sehingga tampilan yang ada akan tampak standar sama seperti tampilan aplikasi yang umumnya ada saat ini, dengan menggunakan bentuk natural, warna yang tidak terlalu kontras, serta shading dan gradasi yang datar.
 \vspace{0.5ex}

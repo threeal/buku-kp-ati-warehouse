@@ -10,45 +10,488 @@
 \section{Deskripsi Sistem}
 \vspace{1ex}
 
-Sistem akan dibuat dengan \lipsum[1]
+Sistem yang kami buat merupakan sebuah website yang bisa digunakan untuk melakukan administrasi loading barang pada PT. Aneka Tuna Indonesia yang sebelumnya secara penuh berbasis kertas.
+Sistem ini nantinya akan dibuat menggunakan \emph{Node.js} sebagai kerangka utama dari program dan \emph{MongoDB} sebagai database dari sistem tersebut yang berbasis \emph{document-oriented}.
 \vspace{0.5ex}
 
-\section{Implementasi Alat}
+Pada PT. Aneka Tuna Indoensia, administrasi loading barang dilakukan oleh petugas tertentu yang memiliki jadwal kerja yang berbeda.
+Untuk itu diperlukan sistem akun yang bisa digunakan oleh petugas-petugas tersebut untuk melakukan pencatatan, sehingga hanya petugas-petugas tersebut dan beberapa pihak lain yang bisa mengakses data yang ada pada sistem.
+Selain itu untuk mempermudah pencatatan, sistem yang kami buat juga mendukung adanya PWA sehingga website yang ada bisa dengan mudah terpasang pada perangkat mobile layaknya aplikasi pada umumnya.
+\vspace{0.5ex}
+
+\section{Spesifikasi Kasus Penggunaan}
+
+Secara umum, kasus penggunaan dari sistem yang kami buat bisa dijabarkan sebagai berikut:
+\vspace{0.5ex}
+
+\begin{enumerate}[nolistsep]
+
+  \item Sistem login dan pendaftaran akun baru.
+  \vspace{0.5ex}
+
+  \item Manajemen pengguna oleh admin, termasuk memverifikasi akun baru, mengangkat maupun melepas pengguna dari jabatan admin, serta penghapusan akun.
+  \vspace{0.5ex}
+
+  \item Manajemen data administrasi loading barang yang meliputi data produk, dokumen muat palet, dokumen bongkar basket, dan lain sebagainya.
+  \vspace{0.5ex}
+
+  \item Pengunduhan data administrasi loading barang dalam bentuk \emph{spreadsheet}.
+  \vspace{0.5ex}
+
+\end{enumerate}
+\vspace{0.5ex}
+
+\section{Implementasi Sistem}
 \vspace{1ex}
 
-Alat diimplementasikan dengan \lipsum[2]
+Pada bagian ini, kami akan menjelaskan implementasi yang kami lakukan pada sistem yang kami buat dengan melihat spesifikasi kasus penggunaan seperti yang dijelaskan sebelumnya.
+Untuk mempersingkat cakupan bahasan pada buku ini, kami hanya akan menampilkan sebagian kecil kode program yang kami gunakan.
+Untuk Detail lebih lengkap dari kode program sistem yang kami buat bisa dilihat pada repository \emph{GitHub} \citep{repoGithub} yang ada.
+
+\subsection{Implementasi \emph{Database}}
+\vspace{1ex}
+
+Database yang digunakan pada sistem yang kami buat merupakan database yang berbasis \emph{document-oriented}, sehingga data yang ada akan tersimpan dalam bentuk dokumen (seperti class pada bahasa pemrograman), dan bukan berbentuk tabel seperti database pada umumnya.
+Dalam implementasinya, kami menggunakan \emph{MongoDB} sebagai sistem dari database itu sendiri dan library tambahan \emph{Mongoose} yang digunakan untuk mengkases \emph{MongoDB} pada program yang berbasis \emph{Node.js}.
+
+Pada \emph{MongoDB}, setiap data yang ada pada database akan dibedakan berdasarkan schema yang merepresentasikan model dari data yang digunakan.
+Pada sistem yang kami buat, schema tersebut terdiri atas schema untuk pengguna, jenis produk, dokumen, dokumen bongkar basket, dokumen muat palet, data basket, serta data palet.
 \vspace{0.5ex}
 
-% Digunakan untuk page break
+Pada schema pengguna, seperti yang terlihat pada kode program \ref{lst:schemaPengguna}, data yang dimiliki oleh pengguna adalah username dan password yang digunakan untuk login akun, fullname sebagai keterangan nama lengkap dari pengguna, serta status verified dan admin dari pengguna tersebut.
+Untuk menjaga keamanan dari akun pengguna, sistem hanya menyimpan password dari akun pengguna dalam bentuk hash dan bukan dalam bentuk yang sebenarnya.
+\vspace{0.5ex}
+
 \newpage
 
-% Contoh pembuatan code snippet
 \begin{lstlisting}[
-  language=C++,
-  label={lst:helloWorld},
-  caption={Hello World}
+  language=C,
+  label={lst:schemaPengguna},
+  caption={Schema Data Pengguna}
 ]
-#include <iostream>
+let schema = mongoose.Schema(
+  {
+    username: String,
+    fullname: String,
+    password: String,
+    verified: Boolean,
+    admin: Boolean,
+  },
+  { timestamp: true },
+);
+\end{lstlisting}
+\vspace{0.5ex}
 
-int main() {
-    std::cout << "Hello World!";
-    return 0;
+Pada schema jenis produk, seperti yang terlihat pada kode program \ref{lst:schemaJenisProduk}, data yang dimiliki oleh jenis produk adalah nama dari produk tersebut serta tiga parameter lain yang digunakan untuk kalkulasi jumlah kaleng.
+Ketiga parameter tersebut dibutuhkan karena tidak semua jenis produk memiliki perbandingan nilai yang sama untuk kalkulasi.
+\vspace{0.5ex}
+
+\begin{lstlisting}[
+  language=C,
+  label={lst:schemaJenisProduk},
+  caption={Schema Data Jenis Produk}
+]
+let schema = mongoose.Schema(
+  {
+    name: String,
+    cansPerBasketTray: Number,
+    cansPerPalletLayer: Number,
+    cansPerCase: Number,
+  },
+  { timestamp: true },
+);
+\end{lstlisting}
+\vspace{0.5ex}
+
+Pada schema dokumen, seperti yang terlihat pada kode program \ref{lst:schemaDokumen}, data yang dimiliki oleh dokumen adalah nama dari dokumen itu sendiri, id dari data jenis produk, serta tanggal produksi.
+Schema dokumen ini digunakan untuk merepresentasikan satu kesatuan dokumen bongkar basket dan muat palet yang saling berkaitan, karena pada PT Aneka Tuna Indonesia, proses administrasi ketika bongkar basket dan muat palet dilakukan secara berurutan.
+\vspace{0.5ex}
+
+\newpage
+
+\begin{lstlisting}[
+  language=C,
+  label={lst:schemaDokumen},
+  caption={Schema Data Dokumen}
+]
+let schema = mongoose.Schema(
+  {
+    name: String,
+    productKindId: String,
+    productionDate: String,
+  },
+  { timestamp: true },
+);
+\end{lstlisting}
+\vspace{0.5ex}
+
+Pada schema dokumen bongkar basket, seperti yang terlihat pada kode program \ref{lst:schemaBongkarBasket}, data yang dimiliki oleh dokumen bongkar basket adalah id dari data dokumen, tanggal bongkar, serta line yang digunakan saat melakukan proses pembongkaran ke basket.
+\vspace{0.5ex}
+
+\begin{lstlisting}[
+  language=C,
+  label={lst:schemaBongkarBasket},
+  caption={Schema Data Dokumen Bongkar Basket}
+]
+let schema = mongoose.Schema(
+  {
+    documentId: String,
+    unloadDate: String,
+    line: String,
+  },
+  { timestamp: true },
+);
+\end{lstlisting}
+\vspace{0.5ex}
+
+Pada schema dokumen muat palet, seperti yang terlihat pada kode program \ref{lst:schemaMuatPalet}, data yang dimiliki oleh dokumen muat palet adalah id dari data dokumen, tanggal muat, serta nama merek dari barang yang akan diproduksi oleh perusahaan.
+\vspace{0.5ex}
+
+\begin{lstlisting}[
+  language=C,
+  label={lst:schemaMuatPalet},
+  caption={Schema Data Dokumen Muat Palet}
+]
+let schema = mongoose.Schema(
+  {
+    documentId: String,
+    loadDate: String,
+    brand: String,
+  },
+  { timestamp: true },
+);
+\end{lstlisting}
+\vspace{0.5ex}
+
+\newpage
+
+Pada schema data basket, seperti yang terlihat pada kode program \ref{lst:schemaBasket}, data yang dimiliki oleh basket terdiri atas id data dokumen, nomor basket, id basket, waktu mulai dan selesai, jumlah tray, jumlah kaleng sisa, jumlah rijek, jenis rijek jika ada, serta 3 parameter kondisi yang digunakan untuk menguji kelayakan dari produk yang ada pada basket.
+\vspace{0.5ex}
+
+\begin{lstlisting}[
+  language=C,
+  label={lst:schemaBasket},
+  caption={Schema Data Basket}
+]
+let schema = mongoose.Schema(
+  {
+    documentId: String,
+    basketNumber: Number,
+    basketId: Number,
+    startTime: String,
+    endTime: String,
+    trayQuantity: Number,
+    canQuantity: Number,
+    rejectQuantity: Number,
+    rejectKind: String,
+    seamingCondition: Boolean,
+    canMarkCondition: Boolean,
+    indicatorCondition: Boolean,
+  },
+  { timestamp: true },
+);
+\end{lstlisting}
+\vspace{0.5ex}
+
+Pada schema data palet, seperti yang terlihat pada kode program \ref{lst:schemaPalet}, data yang dimiliki oleh palet terdiri atas id data dokumen, nomor palet, nomor keranjang sebelumnya yang masuk ke palet, waktu mulai dan selesai, jumlah layer, jumlah kaleng sisa, nama dari pekerja yang melakukan proses muat palet, serta beberapa parameter lain yang digunakan untuk menguji kelayakan produk ketika proses muat palet.
+\vspace{0.5ex}
+
+\begin{lstlisting}[
+  language=C,
+  label={lst:schemaPalet},
+  caption={Schema Data Palet}
+]
+let schema = mongoose.Schema(
+  {
+    documentId: String,
+    palletNumber: Number,
+    basketNumbers: [Number],
+    startTime: String,
+    endTime: String,
+    layerQuantity: Number,
+    canQuantity: Number,
+    loader: String,
+    seamingCondition: Boolean,
+    cleanCondition: Boolean,
+    noRustCondition: Boolean,
+    noOilyCondition: Boolean,
+    bottomPrintResult: Boolean,
+    middlePrintResult: Boolean,
+    topPrintResult: Boolean,
+    remarks: String,
+  },
+  { timestamp: true },
+);
+\end{lstlisting}
+\vspace{0.5ex}
+
+\subsection{Implementasi \emph{REST API}}
+\vspace{1ex}
+
+Pembuatan \emph{REST API} pada sistem yang kami buat membutuhkan dua library tambahan yakni \emph{Express} yang digunakan sebagai penyedia \emph{REST API} pada server dan \emph{Axios} yang digunakan untuk mengakses \emph{REST API} tersebut pada client.
+\emph{REST API} yang digunaka pada sistem yang kami buat terdiri atas \emph{API} untuk autentikasi, pengguna, data dokumen, data jenis produk, data bongkar basket, data muat palet, data basket, dan data palet.
+Masing-masing \emph{API} tersebut akan terbagi atas 3 bagian yang berupa route untuk mengatur alamat dari \emph{API} tersebut pada server, controller yang berisi proses yang akan dilakukan ketika \emph{API} tersebut dipanggil, dan service yang digunakan pada client untuk memanggil \emph{API} tersebut.
+\vspace{0.5ex}
+
+Sebagai contoh, pada implementasi \emph{API} data dokumen, seperti yang terlihat pada kode program route \ref{lst:routeDokumen}, \emph{API} yang dibuat dapat dipanggil menggunakan berbagai macam metode request pada alamat tertentu yang kemudian akan memanggil proses yang dilakukan oleh controller dari \emph{API} tersebut.
+Untuk menghindari pengguna yang belum login untuk mengakses \emph{API} ini, maka dibutuhkan layer tambahan yang digunakan untuk melakukan pengecekan token request, jika pengecekan gagal maka \emph{API} akan merespon request dengan error.
+\vspace{0.5ex}
+
+\newpage
+
+\begin{lstlisting}[
+  language=C,
+  label={lst:routeDokumen},
+  caption={Route \emph{API} Dokumen}
+]
+module.exports = (app) => {
+  const express = require('express');
+  var router = express.Router();
+
+  const { authJwt } = require('../middlewares');
+
+  const controller = require('../controllers/document.controller.js');
+
+  router.get('/', [ authJwt.verifyToken ], controller.findAll);
+  router.post('/', [ authJwt.verifyToken ], controller.create);
+
+  router.get('/:documentId', [ authJwt.verifyToken ], controller.findOne);
+  router.put('/:documentId', [ authJwt.verifyToken ], controller.update);
+  router.delete('/:documentId', [ authJwt.verifyToken ], controller.remove);
+
+  app.use('/api/document', router);
+};
+\end{lstlisting}
+\vspace{0.5ex}
+
+Kemudian sebagai contoh implementasi controller untuk penambahan data dokumen, seperti yang terlihat pada kode program \ref{lst:controllerDokumen}, proses dari controller tersebut adalah dengan mengambil data yang disematkan pada request, dan kemudian memanggil fungsi yang ada pada \emph{Mongoose} untuk menambahkan data pada database.
+Setelah proses tersebut selesai, maka controller akan memberi respon kepada client, sesuai dengan hasil dari penambahan data tersebut ke database, apakah berhasil atau gagal.
+\vspace{0.5ex}
+
+\begin{lstlisting}[
+  language=C,
+  label={lst:controllerDokumen},
+  caption={Controller Penambahan Data Dokumen}
+]
+exports.create = (req, res) => {
+  if (!req.body) {
+    return res.status(400).send({ message: 'content could not be empty!' });
+  }
+
+  const document = new Document({
+    name: req.body.name,
+    productKindId: req.body.productKindId,
+    productionDate: req.body.productionDate,
+  });
+
+  document.save(document)
+    .then(() => {
+      res.send({ message: 'document was created successfully' });
+    })
+    .catch((err) => {
+      res.status(500).send({ message: err.message });
+    });
+};
+\end{lstlisting}
+\vspace{0.5ex}
+
+Terakhir, sebagai contoh implementasi service untuk penambahan data dokumen, seperti yang telihat pada kode program \ref{lst:serviceDokumen}, service yang ada akan mengembalikan object axios yang digunakan untuk memanggil request post pada alamat tersebut menggunakan data yang diberikan.
+Karena pada route sebelumnya terdapat layer tambahan yang digunakan untuk melakukan pengecekan token request, maka agar request berhasil, diperlukan adanya header autentikasi yang akan disematkan pada request tersebut.
+\vspace{0.5ex}
+
+\begin{lstlisting}[
+  language=C,
+  label={lst:serviceDokumen},
+  caption={Service \emph{API} Dokumen}
+]
+create(data) {
+  let config = { headers: AuthService.header() };
+  return http.post('/api/document', data, config);
 }
 \end{lstlisting}
 \vspace{0.5ex}
 
-% Contoh penggunaan referensi dari code snippet yang diinputkan
-Seperti contoh pada baris program \ref{lst:helloWorld} dan \ref{lst:bilanganPrima}, \lipsum[3]
+\subsection{Implementasi Aplikasi}
+\vspace{1ex}
+
+Sistem yang kami buat menggunakan \emph{Vue.js} sebagai framework yang digunakan untuk mengatur tampilan aplikasi pada client dan library tambahan \emph{Vuetify} yang digunakan sebagai template dari komponen yang banyak digunakan pada aplikasi yang dibuat.
+Pada aplikasi berbasis \emph{Vue.js}, tampilan dari aplikasi akan terpisah menjadi beberapa component utama, setiap component tersebut umumnya terdiri atas template yang merupakan bentuk \emph{HTML} dari aplikasi yang dibuat dan script yang berupa isi program yang akan mengatur component tersebut.
 \vspace{0.5ex}
 
-% Contoh input code snippet
-\lstinputlisting[
-  % Bahasa yang digunakan oleh code snippet
-  language=Python,
-  % Label referensi dari code snippet yang diinputkan
-  label={lst:bilanganPrima},
-  % Keterangan dari code snippet yang diinputkan
-  caption={Perhitungan Bilangan Prima}
-% Nama dari file code snippet yang diinputkan
-]{program/prime-number.py}
+\newpage
+
+Sebagai contoh implementasi dari component yang bertugas untuk menambahkan data dokumen, seperti yang terlihat pada kode program bagian template \ref{lst:templateDokumen} dan script \ref{lst:scriptDokumen}, bagian template digunakan untuk menentukan tampilan dari aplikasi dan hal hal yang akan mempengaruhi bentuk tampilan tersebut, sebagai contoh component v-button akan muncul atau menghilang bergantung dengan status dari variabel cancelCallback yang berupa fungsi atau bukan.
+\vspace{0.5ex}
+
+Kemudian bagian script dari component tersebut digunakan untuk mengatur data apa saja yang dimiliki serta proses yang bisa dilakukan oleh component tersebut.
+Sebagai contoh, ketika method onAdd() terpanggil, maka component akan memanggil service create seperti yang dijelaskan pada bagian sebelumnya menggunakan data yang dimiliki oleh component tersebut.
+\vspace{0.5ex}
+
+\begin{lstlisting}[
+  language=HTML,
+  label={lst:templateDokumen},
+  caption={Bagian Template Component Dokumen}
+]
+<v-card>
+  <v-toolbar class="flex-grow-0" color="primary" dark flat>
+    <v-btn v-if="typeof cancelCallback === 'function'" @click="onClose()" icon dark>
+      <v-icon>mdi-close</v-icon>
+    </v-btn>
+    <v-toolbar-title>Tambah Dokumen</v-toolbar-title>
+  </v-toolbar>
+  <v-card-text>
+    <v-divider v-if="typeof cancelCallback === 'function'" inset vertical/>
+    <v-row>
+      <v-col cols="12">
+        <v-text-field v-model="name" label="Nama"
+            :disabled="submitting" hide-details dense outlined/>
+      </v-col>
+      <v-col cols="12">
+        <v-select v-model="productKindSelect" :items="productKindList"
+            label="Jenis Produk" no-data-text="Jenis produk kosong"
+            item-text="name" item-value="id" return object
+            :disabled="productKindFetching || submitting"
+            :loading="productKindFetching" hide-details dense outlined/>
+      </v-col>
+      <v-col cols="12">
+        <v-text-field v-model="productionDate" label="Tanggal Produksi" type="date"
+            :disabled="submitting" hide-details dense outlined/>
+      </v-col>
+    </v-row>
+  </v-card-text>
+  <v-card-actions>
+    <v-container>
+      <v-row no-gutters>
+        <v-col cols="12">
+          <v-btn @click="onAdd()" :disabled="addDisabled"
+              :loading="submitting" color="success" block>
+            <v-icon left>mdi-upload</v-icon> Submit Dokumen
+          </v-btn>
+        </v-col>
+      </v-row>
+    </v-container>
+  </v-card-actions>
+</v-card>
+\end{lstlisting}
+\vspace{0.5ex}
+
+\newpage
+
+\begin{lstlisting}[
+  language=C,
+  label={lst:scriptDokumen},
+  caption={Bagian Script Component Dokumen}
+]
+import '../plugins/utility'
+import ProductKindService from '../services/ProductKindService'
+import DocumentService from '../services/DocumentService'
+import AuthService from '../services/AuthService'
+
+export default {
+  name: 'document-add',
+  props: {
+    app: { type: Object, required: true },
+    cancelCallback: { type: Function },
+    successCallback: { type: Function },
+  },
+  data() {
+    return {
+      name: null,
+      productKindSelect: null,
+      productKindList: [],
+      productKindFetching: true,
+      productionDate: (new Date()).toDateInput(),
+      submitting: false,
+    };
+  },
+  computed: {
+    addDisabled() {
+      return this.submitting || !this.name || !this.productKindSelect
+        || !this.productionDate;
+    },
+  },
+  methods: {
+    reset() {
+      this.productKindSelect = null;
+      this.productionDate = (new Date()).toDateInput();
+    },
+    onClose() {
+      if (typeof this.cancelCallback === 'function') {
+        this.cancelCallback();
+      }
+    },
+    onAdd() {
+      this.submitting = true;
+
+      let data = {
+        name: this.name,
+        productKindId: this.productKindSelect,
+        productionDate: this.productionDate,
+      };
+
+      DocumentService.create(data)
+        .then(() => {
+          this.app.log('Dokumen berhasil ditambahkan');
+
+          this.submitting = false;
+          this.reset();
+
+          if (typeof this.successCallback === 'function') {
+            this.successCallback();
+          }
+        })
+        .catch((err) => {
+          this.submitting = false;
+
+          if (err.response) {
+            if (err.response.status === 401) {
+              this.app.log('Sesi habis, harap masuk kembali');
+
+              AuthService.signOut();
+              this.app.routeReplace('/login');
+            }
+            else {
+              this.app.log('Dokumen gagal ditambahkan,'
+                + ` kesalahan server (${err.response.status})`);
+            }
+          }
+          else {
+            this.app.log('Dokumen gagal ditambahkan, tidak ada jaringan');
+          }
+        });
+    },
+  },
+  mounted() {
+    ProductKindService.findAll()
+      .then((res) => {
+        this.productKindList = [];
+        res.data.forEach((productKind) => {
+          this.productKindList.push({
+            id: productKind.id,
+            name: productKind.name,
+          });
+        });
+
+        this.productKindFetching = false;
+      })
+      .catch((err) => {
+        if (err.response) {
+          if (err.response.status === 401) {
+            this.app.log('Sesi habis, harap masuk kembali');
+
+            AuthService.signOut();
+            this.app.routeReplace('/login');
+          }
+          else {
+            this.app.log('Gagal mengambil daftar jenis produk,'
+              + ` kesalahan server (${err.response.status})`);
+          }
+        }
+        else {
+          this.app.log('Gagal mengambil daftar jenis produk, tidak ada jaringan');
+        }
+      });
+  }
+}
+\end{lstlisting}
 \vspace{0.5ex}
