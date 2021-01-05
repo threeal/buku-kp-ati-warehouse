@@ -31,6 +31,7 @@
 \usepackage{eso-pic} % Pembuatan background
 \usepackage{changepage} % Pembuatan teks kolom
 \usepackage{wrapfig} % Wrapping gambar
+\usepackage{pdfpages} % Input PDF
 
 % Definisi untuk "Hati ini sengaja dikosongkan"
 \def\kosong{
@@ -103,11 +104,19 @@
   \cleardoublepage
 
   % Lembar pengesahaan untuk departemen
-  \input{pengesahan/pengesahan-departemen.tex}
+  % \input{pengesahan/pengesahan-departemen.tex}
+  \thispagestyle{empty}
+  \addcontentsline{toc}{chapter}{LEMBAR PENGESAHAN (DEPARTEMEN)}
+  \includepdf{pengesahan/pengesahan-departemen.pdf}
+  \newpage
   \cleardoublepage
 
   % Lembar pengesahan untuk perusahaan
-  \input{pengesahan/pengesahan-perusahaan.tex}
+  % \input{pengesahan/pengesahan-perusahaan.tex}
+  \thispagestyle{empty}
+  \addcontentsline{toc}{chapter}{LEMBAR PENGESAHAN (PERUSAHAAN)}
+  \includepdf{pengesahan/pengesahan-perusahaan.pdf}
+  \newpage
   \cleardoublepage
 
   % Kata pengantar
